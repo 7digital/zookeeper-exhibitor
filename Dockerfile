@@ -1,9 +1,9 @@
-FROM debian:7.8
-MAINTAINER DJ Enriquez <dj@glympse.com>
+FROM debian:7.11
 
-ENV ZK_VERSION 3.4.9
+
+ENV ZK_VERSION 3.4.10
 ENV ZK_RELEASE http://www.apache.org/dist/zookeeper/zookeeper-${ZK_VERSION}/zookeeper-${ZK_VERSION}.tar.gz
-ENV EXHIBITOR_POM https://raw.githubusercontent.com/Netflix/exhibitor/d911a16d704bbe790d84bbacc655ef050c1f5806/exhibitor-standalone/src/main/resources/buildscripts/standalone/maven/pom.xml
+ENV EXHIBITOR_POM https://raw.githubusercontent.com/7digital/exhibitor/master/exhibitor-standalone/src/main/resources/buildscripts/standalone/maven/pom.xml
 ENV DEBIAN_FRONTEND noninteractive
 
 # Use one step so we can remove intermediate dependencies and minimize size
