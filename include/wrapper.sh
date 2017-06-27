@@ -31,6 +31,7 @@ for zk in "${zookeepers[@]}"; do
     ZOO_CFG_EXTRA=$ZOO_CFG_EXTRA"&server."$COUNTER"\="$zk;
     COUNTER=`expr $COUNTER + 1`
 done
+unset IFS
 
 cat <<- EOF > /opt/exhibitor/defaults.conf
 	zookeeper-data-directory=$ZK_DATA_DIR
