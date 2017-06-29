@@ -11,7 +11,6 @@ DEFAULT_ZK_ENSEMBLE_SIZE=0
 DEFAULT_OBSERVER_THRESHOLD=4
 S3_SECURITY=""
 HTTP_PROXY=""
-ZOO_CFG_EXTRA="tickTime\=2000&initLimit\=10&syncLimit\=5&quorumListenOnAllIPs\=true"
 : ${HOSTNAME:?$MISSING_VAR_MESSAGE}
 : ${AWS_REGION:=$DEFAULT_AWS_REGION}
 : ${ZK_DATA_DIR:=$DEFAULT_DATA_DIR}
@@ -23,14 +22,6 @@ ZOO_CFG_EXTRA="tickTime\=2000&initLimit\=10&syncLimit\=5&quorumListenOnAllIPs\=t
 : ${HTTP_PROXY_PASSWORD:=""}
 : ${OBSERVER_THRESHOLD:=$DEFAULT_OBSERVER_THRESHOLD}
 : ${EXHIBITOR_PORT:=8181}
-: ${ZK_ENSEMBLE_LIST:=""} # comma delimited, assume passed in order
-
-COUNTER=1 # zk servers start at 1
-IFS=',' zookeepers=($ZK_ENSEMBLE_LIST)
-for zk in "${zookeepers[@]}"; do
-    ZOO_CFG_EXTRA=$ZOO_CFG_EXTRA"&server."$COUNTER"\="$zk;
-    COUNTER=`expr $COUNTER + 1`
-done
 
 cat <<- EOF > /opt/exhibitor/defaults.conf
 	zookeeper-data-directory=$ZK_DATA_DIR
@@ -46,7 +37,7 @@ cat <<- EOF > /opt/exhibitor/defaults.conf
 	connect-port=2888
 	observer-threshold=$OBSERVER_THRESHOLD
 	election-port=3888
-	zoo-cfg-extra=$ZOO_CFG_EXTRA
+	zoo-cfg-extra=tickTime\=2000&initLimit\=10&syncLimit\=5&quorumListenOnAllIPs\=true
 	auto-manage-instances-settling-period-ms=0
 	auto-manage-instances=1
 	auto-manage-instances-fixed-ensemble-size=$ZK_ENSEMBLE_SIZE
