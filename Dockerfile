@@ -8,7 +8,7 @@ ENV EXHIBITOR_POM https://raw.githubusercontent.com/7digital/exhibitor/master/ex
 RUN \
     # Install dependencies
     apk update && \
-    apk add curl maven
+    apk add curl maven bash
 
     # Install ZK
 RUN \
